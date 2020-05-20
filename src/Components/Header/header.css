@@ -1,0 +1,107 @@
+.header-main{
+	background-image: url(https://www.freewpheaders.com/wp-content/gallery/stones-rocks-gallery/light-sand-background-header.jpg);
+	box-shadow:0 10px 10px black;
+	padding: 20px 40px;
+	height: 80px;
+	color:blue;
+	box-sizing: border-box;
+}
+
+.header-main .header-break {
+	max-width: 1200px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.header-main .header-break h1{
+	float: left;
+	font: bold 28px Arial, Helvetica, sans-serif;
+	line-height: 40px;
+	margin: 0;
+}
+
+.header-main .header-break h1 span {
+	color: yellow;
+	text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+ .span-1 {
+	color:yellow;
+	font: bold;
+	text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+}
+
+
+.header-main .header-break {
+	color: black;
+	text-decoration: none;
+}
+
+.header-main .header-break nav {
+	font:16px Arial, Helvetica, sans-serif;
+	line-height: 40px;
+	float: left;
+	margin: 0 0 0 60px;
+	padding: 0;
+	
+}
+
+.header-main .header-break nav a{
+	font-size: 30px;
+	display: inline-block;
+	padding: 0 5px;
+	opacity: 0.9;
+	text-decoration:none;
+	line-height: 1;
+	color: black
+}
+
+
+.header-main .header-break ul {
+	float: right;
+}
+
+.header-main .header-break ul li {
+	display: inline-block;
+	margin-left: 15px;
+	
+}
+
+@media all and (max-width: 600px) {
+
+	.header-main {
+		padding: 25px;
+		height: 85px;
+	}
+
+	.header-main .header-break h1 {
+		float: none;
+		margin: -8px 0 2px;
+		text-align: center;
+		font-size: 24px;
+		line-height: 1;
+	}
+
+	.header-main .header-break nav {
+		margin: 0;
+		float: none;
+	}
+
+	.header-main .header-break nav li  {
+		font-size: bold 20px;
+	}
+
+
+}
+
+body {
+	margin:0;
+	padding:0;
+}
