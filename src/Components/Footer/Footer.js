@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {logout} from '../../Redux/reducers/user'
 import './footer.css'
 
-class Header extends Component {
+class Footer extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -40,5 +42,11 @@ class Header extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  let {data: user} = state.user
+  return {user}
+}
 
-export default Header;
+const mapDispatchToProps = {logout}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

@@ -36,8 +36,13 @@ app.delete('/auth/logout', authCtrl.logout)
 app.get('/auth/current', authCtrl.getUser)
 
 //players
-app.get('api/players', playerCtrl.getPlayers)
+app.get('/api/players', playerCtrl.getPlayers)
 
+//stats
+// app.get('/stats/hr', statCtrl.getHomeruns)
+// app.get('/stats/walks', statCtrl.getWalks)
+// app.get('/stats/sb', statCtrl.getSb)
+// app.get('/stats/hits', statCtrl.getHits)
 //socket chat
 io.on("connection", socket => {
     const { id } = socket.client;
