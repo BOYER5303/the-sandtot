@@ -36,7 +36,7 @@ class Footer extends Component {
       <footer className="footer-main">
         <div className="footer-break">
           <h1>Contact: <span>Jason@TheSandtot.com</span></h1>
-          <button onClick={this.handleLogout}>Logout</button>
+          <button className='button' onClick={this.handleLogout}>Logout</button>
         </div>
       </footer>
     );

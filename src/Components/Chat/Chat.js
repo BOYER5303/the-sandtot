@@ -44,6 +44,8 @@ class Chat extends Component {
   render() {
     return (
       <div>
+        <h1>BrauTalk</h1>
+        <h2></h2>
         <span>Nickname</span>
         <input
           name="nickname"
@@ -56,7 +58,7 @@ class Chat extends Component {
           onChange={e => this.onTextChange(e)}
           value={this.state.msg}
         />
-        <button onClick={this.onMessageSubmit}>Send</button>
+        <button className='button' onClick={this.onMessageSubmit}>Send</button>
         <div>{this.renderChat()}</div>
       </div>
     );

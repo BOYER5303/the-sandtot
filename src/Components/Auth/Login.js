@@ -1,7 +1,8 @@
 import React, { Component } from 'react' 
 import {connect} from 'react-redux'
 import {login} from '../../Redux/reducers/user'
-//import "../Auth/Login.css"
+
+
 class Login extends Component {
     constructor(props) {
         super(props)
@@ -35,7 +36,7 @@ class Login extends Component {
     render() {
         return (
             <div className='mission-statement'>
-                <h1>Mission Statement:</h1>
+                <h1>Just a place to track little league stats and talk everything brautwurst.</h1>
                 <h2></h2>
             <div className='auth-container'>
                 

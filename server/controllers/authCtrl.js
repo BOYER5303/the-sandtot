@@ -19,13 +19,13 @@ module.exports = {
             let response = await db.auth.create_user([ name, email, hash ])
             let newUser = response[0]
     
-            delete newUser.password
+            delete newUser.hash
     
             req.session.user = newUser
             res.send(req.session.user)
             
         } catch (error) {
-            console.log('error', error)
+            console.log('Error Registering', error)
             res.status(500).send(error)
         }
     },

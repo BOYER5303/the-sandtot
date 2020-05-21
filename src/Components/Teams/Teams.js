@@ -1,151 +1,165 @@
-// import React, { Component } from 'react'
-// import axios from 'axios'
-// import Card from './Card.js'
-// import {Link, Redirect} from 'react-router-dom'
-
-// class Teams extends Component {
-//     constructor(props) {
-//         super(props)
-
-//         this.state = {
-//             user: {},
-//             players: [],
-//             redirect: false
-//         }
-//         this.getPlayers = this.getPlayers.bind(this)
-        
-//     } 
-
-//     componentDidMount() {
-//         this.getPlayers()
-//     }
-
-//     getPlayers = () => {
-//         axios.get('/api/players')
-//         .then(({data}) => {
-//             this.setState({
-//                 players: data
-//             })
-//             console.log(data)
-//         }).catch(err => console.log('Error getting player', err))
-//     }
-    
-
-//     render() {
-//         console.log(this.state.players)
-//         let {redirect} = this.state
-
-//         if (redirect) {
-//             return <Redirect to='/'/>
-//         }
-        
-//         const mappedPlayers = this.state.players.map(item =>
-    
-//             <Card item = {item}
-//             key={item.player_id}
-//             player_id= {item.player_id}
-//             last_name={item.last_name}
-//             first_name={item.first_name}
-//             jersey={item.jersey}
-//             position={item.position}
-//             getPlayers = {this.getPlayers}
-//             />
-//                 ) 
-//         return (
-            
-//                     <div className='teams-main'>     
-//                         <div>
-//                                     <Link to='/form' className='link'><button>add p</button></Link>
-
-//                         </div>
-//                         <section>
-//                             {mappedPlayers}
-//                         </section>
-//                     </div>
-                
-//         )
-    
-// }}
-
-
-
-// export default Teams 
-
-import React, { useMemo, useState, useEffect } from "react";
+import React, {Component} from "react";
 import axios from "axios";
-import Input from "./Input"
+import { connect } from "react-redux";
+import Input from './Input'
 
-import Table from "./Table";
-import "./teams.css";
-import { render } from "ejs";
+class Teams extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+        user: {},
+        players: [],
+        jersey: '',
+        last_name: '',
+        first_name: '',
+        position: ''
+    };
 
-//class Teams extends React {
-function Teams() {
-  const columns = useMemo(
-    () => [
-      {
-        Header: "DivMountaineers",
-        columns: [
-          {
-            Header: "Jersey Number",
-            accessor: "jersey"
-          },
-          {
-            Header: "Last Name",
-            accessor: "last_name"
-          },
-          {
-            Header: "First Name",
-            accessor: "first_name"
-          },
-          {
-            Header: "Primary Position",
-            accessor: "position"
-          },
-
-
-
-        ]
-      },
-      {
-        Header: "Stats",
-        columns: [
-          {
-            Header: "Hits",
-            accessor: 'hits'
-          },
-          {
-            Header: "Outs",
-            accessor: 'outs'
-          },
-          {
-            Header: "Walks",
-            accessor: 'walk'
-          },
-        //   {
-        //     Header: "Status",
-        //     accessor: "show.status"
-        //   }
-        ]
-      }
-    ],
-    []
-  );
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const result = await axios("/api/players");
-      setData(result.data);
-    })();
-  }, []);
-  return (
-    <div className="App">
-      <Table columns={columns} data={data} />
-      <Input/>
-    </div>
-  );
+    this.getPlayers = this.getPlayers.bind(this);
+    this.deletePlayer = this.deletePlayer.bind(this);
+    this.addPlayer = this.addPlayer.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    
 }
+    componentDidMount() {
+        this.getPlayers();
+    }
 
-export default Teams;
+    getPlayers = () => {
+      axios.get('/api/players')
+      .then(({data}) => {
+          this.setState({
+              players: data
+          })
+          console.log(data)
+      }).catch(err => console.log('Error getting player', err))
+  }
+      deletePlayer = id => {
+          axios.delete(`/api/players/${id}`)
+              .then(({data}) => {
+                  this.setState({
+                      players: data
+                  })
+              })
+              .catch(error => {
+                  console.log('Error deleting player', error)
+              })
+      }
+      
+      addPlayer = e => {
+        e.preventDefault()
+        const {jersey, last_name, first_name, position} = this.state
+        const newPlayer = {jersey, last_name, first_name, position}
+        axios.post('/api/players', newPlayer)
+            .then(() => {
+                this.props.history.push('/teams')
+            })
+            .catch(error => {
+                console.log('error creating player', error)
+            })
+    }
+
+    handleChange = e => {
+        let {value, name} = e.target
+        this.setState({
+            [name] : value
+        })
+    }
+
+
+
+render() {
+    const mappedPlayers = this.state.players.map((player, index) => {
+        
+        return (
+        <tr className='players' key={player.player_id}>
+            <td>
+                <button className='delete' onClick={() => this.deletePlayer(player.player_id)}>Demote</button>
+            </td>
+            <td className='jersey'>{player.jersey}</td>
+            <td className='last-name'>{player.last_name}</td>
+            <td className='first-name'>{player.first_name}</td>
+            <td className='position'>{player.position}</td>
+            <td className='hits'></td>
+            <td className='outs'></td>
+            <td className='walks'></td>
+            <td><Input player={player}
+                       key={player.player_id}
+                       player_id={player.player_id}
+                       
+            /></td>
+        </tr>)})
+    return (
+      <div>
+        <h1>The Phoenix DevMountaineers</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Demote</th>
+              <th>Jersey</th>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Position</th>
+              <th>Hits</th>
+              <th>Outs</th>
+              <th>Walks</th>
+              <th>Event</th>
+            </tr>
+          </thead>
+                <tbody>{mappedPlayers}</tbody>
+        </table>
+        <h2>Add Player:</h2>
+        <form className="input" onSubmit={this.addPlayer}>
+                    <span>
+                        <label>Jersey: </label>
+                        <input 
+                            type='text'
+                            onChange={this.handleChange}
+                            name='jersey'
+                            value={this.state.jersey}
+                            placeholder='Jersey number...'/>
+                    </span>
+                    <br/>
+                    <span>
+                        <label>Last Name: </label>
+                        <input
+                            type='text'
+                            onChange={this.handleChange}
+                            name='last_name'
+                            value={this.state.last_name}
+                            placeholder='Last Name...'/>
+                    </span>
+                    <br/>
+                    <span>
+                        <label>First Name: </label>
+                        <input 
+                            type='text'
+                            onChange={this.handleChange}
+                            name='first_name'
+                            value={this.state.first_name}
+                            placeholder='First Name...'/>
+                    </span>
+                    <br/>
+                    <span>
+                        <label>Position: </label>
+                        <input 
+                            type='text'
+                            onChange={this.handleChange}
+                            name='position'
+                            value={this.state.position}
+                            placeholder='Position...'/>
+                    </span>
+                    <button className ="button-form">save</button>
+                </form>
+        
+        
+      </div>
+
+    )
+    }
+  }
+    
+
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps, null)(Teams);

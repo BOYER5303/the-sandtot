@@ -22,7 +22,6 @@ class Input extends Component {
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
-            Add an event:
             <select value={this.state.value} onChange={this.handleChange}>
               <option value="strikeout">Strike Out</option>
               <option value="walk">Walk</option>

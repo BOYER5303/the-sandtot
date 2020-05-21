@@ -37,6 +37,8 @@ app.get('/auth/current', authCtrl.getUser)
 
 //players
 app.get('/api/players', playerCtrl.getPlayers)
+app.post('/api/players', playerCtrl.addPlayer)
+app.delete('/api/players/:id', playerCtrl.deletePlayer)
 
 //stats
 // app.get('/stats/hr', statCtrl.getHomeruns)
