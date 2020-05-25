@@ -20,10 +20,10 @@ CREATE TABLE stats(
     single INT,
     double INT,
     triple INT,
-    strike_out INT,
+    strikeout INT,
     walk INT,
-    stolen_base INT,
-    hbp INT
+    stolen INT,
+    out INT
 );
 
 INSERT INTO players (jersey, last_name, first_name, position)

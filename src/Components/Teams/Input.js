@@ -1,28 +1,57 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 
 class Input extends Component {
     constructor(props) {
       super(props);
-      this.state = {value: 'Select One'};
+      this.state = {
+
+        player_id: '',
+        hr: 0,
+        single: 0,
+        double: 0,
+        triple: 0,
+        strikeout: 0,
+        walk: 0,
+        stolen: 0,
+        out: 0
+      };
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
   
     handleChange(event) {
-      this.setState({value: event.target.value});
+      console.log(event.target.value)
+      this.setState({  hr: 0,
+      single: 0,
+      double:  0,
+      triple: 0,
+      strikeout: 0,
+      walk: 0,
+      stolen: 0,
+      out: 0, [event.target.value]: 1});
     }
   
     handleSubmit(event) {
-      alert('Add : ' + this.state.value);
       event.preventDefault();
-    }
+      const {hr, single, double, triple, strikeout, walk, stolen, out} = this.state
+      axios.post('/api/stats', {player_id: this.props.player_id, hr, single, double, triple, strikeout, walk, stolen, out})
+      .then(() => {
+        this.props.getPlayers()
+    })
+          .catch(error => {
+              console.log('error creating stat', error)
+          })
+  }
+    
   
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
           <label>
-            <select value={this.state.value} onChange={this.handleChange}>
+            <select onChange={this.handleChange}>
+              <option>Select one:</option>
               <option value="strikeout">Strike Out</option>
               <option value="walk">Walk</option>
               <option value="out">Out</option>

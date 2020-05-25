@@ -3,6 +3,7 @@ const massive = require('massive')
 const session = require('express-session')
 const authCtrl = require('./controllers/authCtrl')
 const playerCtrl = require ('./controllers/playerCtrl')
+const statCtrl = require('./controllers/statCtrl')
 const app = express()
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -39,12 +40,16 @@ app.get('/auth/current', authCtrl.getUser)
 app.get('/api/players', playerCtrl.getPlayers)
 app.post('/api/players', playerCtrl.addPlayer)
 app.delete('/api/players/:id', playerCtrl.deletePlayer)
+app.put('/api/players/:id', playerCtrl.updatePosition)
+
 
 //stats
 // app.get('/stats/hr', statCtrl.getHomeruns)
 // app.get('/stats/walks', statCtrl.getWalks)
 // app.get('/stats/sb', statCtrl.getSb)
-// app.get('/stats/hits', statCtrl.getHits)
+app.get('/stats/hits', statCtrl.getHits)
+app.post('/api/stats', statCtrl.addStat)
+
 //socket chat
 io.on("connection", socket => {
     const { id } = socket.client;

@@ -1,3 +1,6 @@
+DELETE FROM stats 
+WHERE player_id = $1;
+
 DELETE FROM players
 WHERE player_id = $1;
 

@@ -7,7 +7,8 @@ module.exports = {
             
             const db = req.app.get('db')
             const allPlayers = await db.players.get_players()
-            res.status(200).send(allPlayers)
+            const allStats = await db.stats.get_stats()
+            res.status(200).send({allPlayers, allStats})
             // }
         } catch (error) {
             console.log('Error getting players.', error)
@@ -37,5 +38,18 @@ module.exports = {
             console.log('Player creation error.', error)
             res.status(500).send(error)
         }
+    },
+    updatePosition: async (req, res) => {
+        //try {
+            const db = req.app.get('db')
+            const {id} = req.params
+            const {position} = req.body
+            const newPosition = await db.players.update_position( [position, id])
+            res.status(200).send(newPosition)
+       // } catch (error){
+            // console.log('Position change error')
+            // res.status(500).send(error)
+      //  }
     }
 }
+
