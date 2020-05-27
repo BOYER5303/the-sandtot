@@ -10,7 +10,7 @@ module.exports = {
             res.status(500).send(error)
         }
     },
-    getHomeruns: async (req, res) => {
+    getHrs: async (req, res) => {
         try {
             
             const db = req.app.get('db')
@@ -26,7 +26,7 @@ module.exports = {
         try {
             
             const db = req.app.get('db')
-            const walksLeaders = await db.stats.walks_leaders()
+            const walksLeaders = await db.stats.get_walks()
             res.status(200).send(walksLeaders)
             // }
         } catch (error) {
@@ -38,7 +38,7 @@ module.exports = {
         try {
             
             const db = req.app.get('db')
-            const sbLeaders = await db.stats.sb_leaders()
+            const sbLeaders = await db.stats.get_sbs()
             res.status(200).send(sbLeaders)
             // }
         } catch (error) {

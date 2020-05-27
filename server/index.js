@@ -44,9 +44,9 @@ app.put('/api/players/:id', playerCtrl.updatePosition)
 
 
 //stats
-// app.get('/stats/hr', statCtrl.getHomeruns)
-// app.get('/stats/walks', statCtrl.getWalks)
-// app.get('/stats/sb', statCtrl.getSb)
+app.get('/stats/hr', statCtrl.getHrs)
+app.get('/stats/walks', statCtrl.getWalks)
+app.get('/stats/sb', statCtrl.getSb)
 app.get('/stats/hits', statCtrl.getHits)
 app.post('/api/stats', statCtrl.addStat)
 
