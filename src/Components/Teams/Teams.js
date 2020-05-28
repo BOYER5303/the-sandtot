@@ -58,9 +58,7 @@ class Teams extends Component {
         const {jersey, last_name, first_name, position} = this.state
         const newPlayer = {jersey, last_name, first_name, position}
         axios.post('/api/players', newPlayer)
-            .then(() => {
-                this.props.history.push('/teams')
-            })
+            .then(() => this.getPlayers())
             .catch(error => {
                 console.log('error creating player', error)
             })
@@ -78,6 +76,7 @@ class Teams extends Component {
      }
 
     handleChange = e => {
+        e.preventDefault()
         let {value, name} = e.target
         this.setState({
             [name] : value
